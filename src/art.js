@@ -10,7 +10,7 @@ for(let i=0;i<22;i++){let x=i%2?395:65,y=65+Math.floor(i/2)*55;oval(c,x+3,y+8,20
 line(c,25,655,155,706,19,'#172832');line(c,25,655,155,706,12,'#b5bdba');line(c,455,655,325,706,19,'#172832');line(c,455,655,325,706,12,'#b5bdba');line(c,210,783,270,783,20,'#543c2a');for(let x=215;x<270;x+=9)line(c,x,773,x,795,4,'#cda86c');
 line(c,430,610,430,742,30,'#162b36');line(c,418,610,418,735,3,'#c3b586');line(c,444,610,444,735,3,'#c3b586');}
 function draw(c,s,input,fx,time){let ch=Core.waveInfo(s?.wave||1,s?.mode||'story').chapter;if(!bg||biome!==ch)build(ch);c.imageSmoothingEnabled=true;c.clearRect(0,0,W,H);c.drawImage(bg,0,0,W,H);
-let charge=s.charge||0;for(let y=700-charge*26;y<739;y+=5)line(c,423,y,437,y+3,2,'#aab5ba');line(c,420,744+charge*12,440,744+charge*12,9,'#d7ad68');
+if(s.rescue>0)line(c,45,770,435,770,3,'#a2ddeb');let charge=s.charge||0;for(let y=700-charge*26;y<739;y+=5)line(c,423,y,437,y+3,2,'#aab5ba');line(c,420,744+charge*12,440,744+charge*12,9,'#d7ad68');
 const looks={orc:['orc-head','#8bb269'],runner:['bat','#baa388'],armored:['skull-mask','#94afc1'],brute:['ogre','#b29569'],healer:['skull-mask','#a991bf'],warden:['ogre','#d7b26d'],shaman:['skull-mask','#b7a1df'],chief:['dragon-head','#e3a079']};
 for(const e of s.enemies||[]){let [,col]=looks[e.type],scale=e.boss?1.7:e.type==='brute'?1.3:1,bob=Math.sin(s.time*7+e.phase)*1.4;oval(c,e.x+2,e.y+20*scale,15*scale,5*scale,'#091c2970');c.save();c.translate(e.x,e.y+bob);c.scale(scale,scale);
 const mage=['healer','shaman'].includes(e.type),armor=['armored','chief','warden'].includes(e.type),skin=e.type==='runner'?'#bfb6a0':e.type==='chief'?'#b2735e':'#91ad66',step=Math.sin(s.time*8+e.phase)*3;
