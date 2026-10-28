@@ -2,8 +2,11 @@ from pathlib import Path
 from zipfile import ZipFile,ZIP_DEFLATED
 root=Path(__file__).parent
 s=(root/'src/shell.html').read_text()
+import json
+assets={p.stem:p.read_text() for p in (root/'assets').glob('*.svg')}
 for name in ('core','art','app'):
- s=s.replace('/*'+name.upper()+'*/',(root/'src'/f'{name}.js').read_text())
+
+ s=s.replace('/*'+name.upper()+'*/',(('const ASSETS='+json.dumps(assets)+';\n') if name=='art' else '')+(root/'src'/f'{name}.js').read_text())
 (root/'index.html').write_text(s)
 (root/'dist').mkdir(exist_ok=True)
 (root/'dist/index.html').write_text(s)

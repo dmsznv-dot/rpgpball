@@ -15,4 +15,5 @@ test('save survives JSON and rejects corrupt input',()=>{const s=C.newRun('endle
 test('boss cannot be skipped by letting it reach the gate',()=>{const s=C.newRun('story',4,'iron');s.wave=12;C.beginWave(s);s.enemies=s.enemies.filter(e=>e.boss);s.enemies[0].y=740;s.toSpawn=0;C.step(s,.01,{});assert.equal(s.phase,'defeat')});
 test('endless continues beyond twelve with cycling biomes',()=>{const s=C.newRun('endless',4,'iron');s.wave=12;C.beginWave(s);s.enemies=[];s.toSpawn=0;C.step(s,.01,{});assert.equal(s.phase,'reward');C.nextWave(s);assert.equal(s.wave,13);assert.equal(C.waveInfo(s.wave,s.mode).chapter,0)});
 test('corrupt entity data is rejected before loading',()=>{let s=C.newRun('story',10,'iron');C.beginWave(s);s.balls[0].x='broken';assert.equal(C.restore(s),null)});
+test('resting or held flipper adds no automatic kick',()=>{for(const held of [false,true]){const s=C.newRun('story',90);C.beginWave(s);s.flippers={left:held?1:0,right:0};const b=s.balls[0];Object.assign(b,{ready:false,x:200,y:held?690:720,vx:0,vy:100});C.step(s,.02,{left:held});assert(!s.events.some(e=>e.type==='flipper'));assert(b.vy>0)}});
 console.log('All gameplay tests passed');
