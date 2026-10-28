@@ -3,7 +3,7 @@ from zipfile import ZipFile,ZIP_DEFLATED
 root=Path(__file__).parent
 s=(root/'src/shell.html').read_text()
 import json
-assets={p.stem:p.read_text() for p in (root/'assets').glob('*.svg')}
+assets={p.stem:p.read_text() for p in sorted((root/'assets').glob('*.svg'))}
 for name in ('core','art','app'):
 
  s=s.replace('/*'+name.upper()+'*/',(('const ASSETS='+json.dumps(assets)+';\n') if name=='art' else '')+(root/'src'/f'{name}.js').read_text())
